@@ -20,5 +20,8 @@
   "homepage": "https://github.com/Hatopoppo-san/movie_api#readme",
   "dependencies": {
     "lodash": "^4.17.20"
+  },
+  "devDependencies": {
+    "eslint": "^7.16.0"
   }
 }
