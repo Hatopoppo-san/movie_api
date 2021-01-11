@@ -54,7 +54,7 @@ app.get('/movies', (req, res) => {
     res.json(movies);
 });
 
-app.use('/documentation.html', express.static('public'));
+app.use(express.static('public'));
 
 // listen for requests
 app.listen(8080, () => {
