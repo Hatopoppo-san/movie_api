@@ -5,8 +5,109 @@
     <meta name="viewpoint" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
     <title>documentation</title>
+    <style>
+      td, th{border: 1px solid black;}
+      * {font-family:Arial, Helvetica, sans-serif;}
+    </style>
   </head>
   <body>
       <div>Here stored information about movies</div>
+      <div>
+        <table style='border: 1px solid black'>
+          <tr>
+            <th><h2>Business Logic</h2></th>
+            <th><h2>Endpoints</h2></th>
+            <th><h2>HTTP Method</h2></th>
+            <th><h2>Request body data format</h2></th>
+            <th><h2>Response body data format</h2></th>
+          </tr>
+          <tr>
+            <td><h4>Return a list of ALL movies to the User</h4></td>
+            <td><h4>/movies</h4></td>
+            <td><h4>GET</h4></td>
+            <td><h4>None</h4></td>
+            <td><h4>A JSON object holding data abut all the movies</h4></td>
+          </tr>
+          <tr>
+            <td><h4>Return data(description, genre, director, image URL, whether it's featured or not) about a single movie by title to the user </h4></td>
+            <td><h4>/movies/[Name]</h4></td>
+            <td><h4>GET</h4></td>
+            <td><h4>None</h4></td>
+            <td><h4>A JSON object holding data about a single movie, containing description, genre, director, image URL, whether it's featured or not. Example: </h4><br> 
+              <h5 style='color: skyblue'>{<br>
+                name: "The Matrix",<br>
+                genre: "sci-fi",<br>
+                director: "The Wachowskis", <br>
+                description: "",
+                image URL: "https://en.wikipedia.org/wiki/The_Matrix#/media/File:The_Matrix_Poster.jpg", <br>
+                feature: "Yes"<br>
+              }<br>
+            </h5></td>
+          </tr>
+          <tr>
+            <td><h4>Return data about a genre(description) by name/title</h4></td>
+            <td><h4>/movies/[Name]/[genre]</h4></td>
+            <td><h4>GET</h4></td>
+            <td><h4>None</h4></td>
+            <td><h4>Return genre data by movie's name</h4></td>
+          </tr>
+          <tr>
+            <td><h4>Return data about a director (bio, birth year, death year) by name</h4></td>
+            <td><h4>/directors/[Name]</h4></td>
+            <td><h4>GET</h4></td>
+            <td><h4>None</h4></td>
+            <td><h4>A JSON object holding data about a director. Example: </h4><br>
+            <h5 style='color: skyblue'>{<br>
+              name: "The Wachowskis",<br>
+              birth: "",<br>
+              death: "",<br>
+              bio: ""<br>
+            } 
+            </h5></td>
+          </tr>
+          <tr>
+            <td><h4>Allow new users to register</h4></td>
+            <td><h4>/users</h4></td>
+            <td><h4>POST</h4></td>
+            <td><h4>A JSON object holding data about user to add, structured like:</h4><br>
+            <h5 style='color: skyblue'>{<br>
+              name: "movieholic55"<br>
+            }</h5></td>
+            <td><h4>A JSON object holding data about the student that was added, including an ID:</h4><br>
+            <h5 style='color: skyblue'>{<br>
+              id: 5,<br>
+              name: "movieholic55"<br>
+            }</h5></td>
+          </tr>
+          <tr>
+            <td><h4>Allow users to update their user info(username)</h4></td>
+            <td><h4>/users/[Name]</h4></td>
+            <td><h4>PUT</h4></td>
+            <td><h4>None</h4></td>
+            <td><h4>A text message indicating whether the username was updated</h4></td>
+          </tr>
+          <tr>
+            <td><h4>Allow users to add a movie to their list of favorites (showing only a text that a movie has been added)</h4></td>
+            <td><h4>/movies/[Name]</h4></td>
+            <td><h4>PUT</h4></td>
+            <td><h4>None</h4></td>
+            <td><h4>A text message indicating whether the movie was successfully added to the favorite</h4></td>
+          </tr>
+          <tr>
+            <td><h4>Allow to remove a movie from their list of favorites (showing only a text that a movie has been removed)</h4></td>
+            <td><h4>/users/[Name]/[Favorites]</h4></td>
+            <td><h4>DELETE</h4></td>
+            <td><h4>None</h4></td>
+            <td><h4>A text message indicating whether the movie was removed from the favorite</h4></td>
+          </tr>
+          <tr>
+            <td><h4>Allow existing users to deregister (showing only a text that a user email has been removed)</h4></td>
+            <td><h4>/users/[ID]</h4></td>
+            <td><h4>DELETE</h4></td>
+            <td><h4>None</h4></td>
+            <td><h4>A text message indicating whether the user email address has been removed</h4></td>
+          </tr>
+        </table>
+      </div>
   </body>
 </html>
