@@ -64,7 +64,7 @@ let users = [
 //GET requests
 
 
-app.use(express.static('public'))
+app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     res.send('Welcome to myFlix!');
@@ -83,18 +83,22 @@ app.get('/movies/:name', (req, res) => {
 });
 
 //Return data about a genre(description) by name/title so far doesn't work
+/* so far this doesn't work
 app.get('/movies/:name/genre', (req, res) => {
     res.json(movies.find((movie) => {
         return movie.genre === req.params.genre
     }));
-});
+}); */
+app.get('')
+res.send('Successful GET request returning data on genre')
 
 // Return data about a director (bio, birth year, death year) by name
-app.get('/movies/directors/:name', (req, res) => {
+/* app.get('/movies/directors/:name', (req, res) => {
     res.json(directors.find((director) => {
         return directors.name === req.params.name
     }));
-});
+}); */
+res.send('Successful GEt request returning data on director')
 
 // Allow new users to register
 app.post('/users', (req, res) => {
