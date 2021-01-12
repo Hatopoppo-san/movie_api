@@ -46,6 +46,9 @@ let movies = [
 
 //GET requests
 
+
+app.use(express.static('public'));
+
 app.get('/', (req, res) => {
     res.send('Welcome to myFlix!');
 });
@@ -54,7 +57,7 @@ app.get('/movies', (req, res) => {
     res.json(movies);
 });
 
-app.use(express.static('public'));
+
 
 // listen for requests
 app.listen(8080, () => {
