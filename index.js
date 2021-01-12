@@ -3,43 +3,53 @@ const app = express();
 
 let movies = [
     {
-        title: 'The Lakehouse',
+        name: 'The Lakehouse',
+        genre: 'mystery',
         actor: ['Keanu Reeves', 'Sandra Bullock']
     },
     {
-        title: 'Lord of the Rings',
+        name: 'Lord of the Rings',
+        genre: 'fantasy',
         actor: ['Elijah Wood', 'Orlando Bloom']
     },
     {
-        title: 'The HEAT',
+        name: 'The HEAT',
+        genre: ['action', 'comedy'],
         actor: ['Melissa McCarthy', 'Sandra Bullock']
     },
     {
-        title: 'SPY',
+        name: 'SPY',
+        genre: ['action', 'comedy'],
         actor: ['Melisa McCarthy', 'Jason Statham']
     },
     {
-        title: 'The Bourne Identity',
+        name: 'The Bourne Identity',
+        genre: ['action', 'mystery', 'thriller'],
         actor: 'Matt Damon'
     },
     {
-        title: 'Les Miserables',
+        name: 'Les Miserables',
+        genre: ['musical', 'drama'],
         actor: ['Hugn Jackman', 'Ann Hathaway']
     },
     {
-        title: 'The Devil Wears Prada',
+        name: 'The Devil Wears Prada',
+        genre: ['comedy', 'drama'],
         actor: ['Ann Hathaway', 'Meryl Streep']
     },
     {
-        title: 'Harry Potter series',
+        name: 'Harry Potter series',
+        genre: 'fantasy',
         actor: ['Daniel Radclife', 'Emma Watson']
     },
     {
-        title: 'Mission: Impossible',
+        name: 'Mission: Impossible',
+        genre: 'action', 
         actor: 'Tom Cruise'
     },
     {
-        title: 'Secondhand Lions',
+        name: 'Secondhand Lions',
+        genre: 'comedy',
         actor: 'Harley Joel Osment'
     } 
 ];
@@ -66,13 +76,13 @@ app.get('/movies', (req, res) => {
 });
 
 // Return data (description, genre, director, image URL, whether it's featured or not) about a single movie by title to the user
-app.get('movies/:name', (req, res) => {
+app.get('/movies/:name', (req, res) => {
     res.json(movies.find((movie) => {
         return movie.name === req.params.name
     }));
 });
 
-//Return data about a genre(description) by name/title
+//Return data about a genre(description) by name/title so far doesn't work
 app.get('/movies/:name/genre', (req, res) => {
     res.json(movies.find((movie) => {
         return movie.genre === req.params.genre
