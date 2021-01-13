@@ -1,5 +1,14 @@
+// In order to use thse middleware, you have to at first require it and set a variable.
+
 const express = require("express");
+const path = require('path');
+const bodyParser = require('body-parser');
+const uuid = require('uuid');
+const { runInNewContext } = require("vm");
 const app = express();
+
+app.use(bodyParser.json());
+
 
 let movies = [
     {
@@ -61,9 +70,20 @@ let users = [
         favorites:[]
     }
 ];
+
+let directors = [
+    {
+        name: "The Wachowskis",
+        birth: "",
+        death: "N/A",
+        bio: "",
+
+    }
+];
+
+let favorites = []
+
 //GET requests
-
-
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
@@ -82,25 +102,34 @@ app.get('/movies/:name', (req, res) => {
     }));
 });
 
-//Return data about a genre(description) by name/title so far doesn't work
+//Return data about a genre(description) by name/title 
 /* so far this doesn't work
 app.get('/movies/:name/genre', (req, res) => {
     res.json(movies.find((movie) => {
-        return movie.genre === req.params.genre
-    }));
-}); */
-app.get('')
-res.send('Successful GET request returning data on genre')
+        return Object.values(req.params.genre)
+        }));
+
+});  */
+
+// use this temporarily for genre
+ app.get('/movies/:name/genre', (req, res) => {
+    res.send('Successful GET request returning data on genre')
+}); 
+
 
 // Return data about a director (bio, birth year, death year) by name
-/* app.get('/movies/directors/:name', (req, res) => {
-    res.json(directors.find((director) => {
-        return directors.name === req.params.name
-    }));
-}); */
-res.send('Successful GEt request returning data on director')
+app.get('/directors', (req, res) => {
+    res.json(directors)
+});
 
-// Allow new users to register
+app.get('/directors/:name', (req, res) => {
+    res.json(directors.find((director) => {
+        return director.name === req.params.name
+    }))
+});
+
+
+// Allow new users to register *worked after installed body-parser & uuid. 
 app.post('/users', (req, res) => {
     let newUser = req.body;
 
@@ -112,53 +141,26 @@ app.post('/users', (req, res) => {
         users.push(newUser);
         res.status(201).send(newUser);
     }
-});
+}); 
 
 // Allow users to update their user info
 app.put('/users/:name', (req, res) => {
-    let user = new user({
-        name: req.params.name
-    });
-
-    if(user) {
-        user.updateOne({ name: req.params.name}, user).then(
-            () => {
-                res.status(201).json({
-                    message: 'User name updatated successfully!'
-                });
-            }
-        ).catch(
-            (error) => {
-                res.status(400).json({
-                    error: error
-                });
-            }
-        )
-    };
+    res.send('Successfully updated the profile')
 });
 
 // Allow users to add a movie to their list of favorites(showing only a text that a movie has been added)
-app.put('/movies/:name', (req, res) => {
+app.put('/users/:name/favorites', (req, res) => {
     res.send('Successfully added to your favorite.')
 });
 
 //Allow users to remove  movie from their list of favorites(showing only a text that a movie has been removed)
-app.delete('users/:name/:favorites', (res, req) => {
+app.delete('/users/:name/favorites', (req, res) => {
     res.send('successfully removed from your favorite.')
 });
 
 //Allow existing users to deregister (showing only a text that a user email has been removed)
-app.delete('/users/:email', (req, res) => {
-    let user = user.filter((obj) => {
-        return obj.email === req.params.email
-    });
-
-    if(user) {
-        users = user.filter((obj) => {
-            return obj.email !== req.params.email
-        });
-        res.status(201).send(`User ${req.params.email} was deleted.`);
-    }
+app.delete('/users/:name', (req, res) => {
+    res.send('Email has been removed')
 });
 
 // listen for requests
