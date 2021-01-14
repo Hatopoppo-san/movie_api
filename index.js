@@ -84,7 +84,7 @@ let directors = [
 let favorites = []
 
 //GET requests
-app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     res.send('Welcome to myFlix!');
