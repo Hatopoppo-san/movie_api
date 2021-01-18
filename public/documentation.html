@@ -30,26 +30,33 @@
           </tr>
           <tr>
             <td><h4>Return data(description, genre, director, image URL, whether it's featured or not) about a single movie by title to the user </h4></td>
-            <td><h4>/movies/[Name]</h4></td>
+            <td><h4>/movies/[Title]</h4></td>
             <td><h4>GET</h4></td>
             <td><h4>None</h4></td>
             <td><h4>A JSON object holding data about a single movie, containing description, genre, director, image URL, whether it's featured or not. Example: </h4><br> 
               <h5 style='color: skyblue'>{<br>
-                name: "The Matrix",<br>
-                genre: "sci-fi",<br>
-                director: "The Wachowskis", <br>
-                description: "",
-                image URL: "https://en.wikipedia.org/wiki/The_Matrix#/media/File:The_Matrix_Poster.jpg", <br>
-                feature: "Yes"<br>
+                Title: "The Matrix",<br>
+                Description: "",<br>
+                Genre: { Name: "sci-fi",<br>
+                         Description: "" }<br>
+                Director: { Name: "The Wachowskis", <br>
+                            Bio: "",<br>
+                            Birth: "",<br>
+                            Death: ""}<br>
+                ImagePath: "https://en.wikipedia.org/wiki/The_Matrix#/media/File:The_Matrix_Poster.jpg", <br>
+                Featured: true<br>
               }<br>
             </h5></td>
           </tr>
           <tr>
             <td><h4>Return data about a genre(description) by name/title</h4></td>
-            <td><h4>/movies/[Name]/genre</h4></td>
+            <td><h4>/movies/:Genre</h4></td>
             <td><h4>GET</h4></td>
             <td><h4>None</h4></td>
-            <td><h4>Return genre data by movie's name</h4></td>
+            <td><h4>Return genre data by name. Example:</h4></td><br>
+            <h5 style='color: skyblue'><br>
+              <!-- You need to put how Genre shows-->
+            </h5>
           </tr>
           <tr>
             <td><h4>Return data about a director (bio, birth year, death year) by name</h4></td>
