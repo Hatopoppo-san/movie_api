@@ -16,12 +16,15 @@ const Users = Models.User;
 //Connect to the server you created
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
+//To erase error message of useFindAndModify
+mongoose.set('useFindAndModify', false);
+
 app.use(bodyParser.json());
 
 // Authentication process 2.9
-let auth = require('./auth.js')(app);
+let auth = require('./auth')(app);
 const passport = require('passport');
-require('./passport.js');
+require('./passport');
 
 
 //GET requests
@@ -32,7 +35,7 @@ app.get('/', (req, res) => {
 });
 
 // Return a list of ALL movies to the User *worked added authetication on 2.9
-app.get('/movies', passport.authenticate('jwt', { session: false}), (req, res) => {
+app.get('/movies', (req, res) => {
     Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
@@ -58,10 +61,10 @@ app.get('/movies/:Title', (req, res) => {
 });
 
 //Return data about a genre(description) by name/title 
-app.get('/movies/genre/:Genre', (req, res) => {
-    Movies.findOne({ "Genre.Name": req.params.Genre })
-        .then((genre) => {
-            res.json(genre);
+app.get('/movies/genre/:title', (req, res) => {
+    Movies.findOne({ Title: req.params.title })
+        .then((movie) => {
+            res.json(movie.Genre);
         })
         .catch((err) => {
             console.error(err);
@@ -71,10 +74,10 @@ app.get('/movies/genre/:Genre', (req, res) => {
 
 
 // Return data about a director (bio, birth year, death year) by name
-app.get('/movies/director/:Director', (req, res) => {
-    Director.findOne({ Name: req.params.Director })
-     .then((director) => {
-         res.json(director);
+app.get('/movies/director/:name', (req, res) => {
+    Movies.findOne({ 'Director.Name': req.params.name })
+     .then((movie) => {
+         res.json(movie.Director);
      })
      .catch((err) => {
          console.error(err);
@@ -82,11 +85,6 @@ app.get('/movies/director/:Director', (req, res) => {
      });
 });
 
-app.get('/directors/:name', (req, res) => {
-    res.json(directors.find((director) => {
-        return director.name === req.params.name
-    }))
-});
 
 //Get all users
 app.get('/users', (req, res) => {
