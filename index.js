@@ -18,79 +18,11 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, 
 
 app.use(bodyParser.json());
 
+// Authentication process 2.9
+let auth = require('./auth.js')(app);
+const passport = require('passport');
+require('./passport.js');
 
-let movies = [
-    {
-        name: 'The Lakehouse',
-        genre: 'mystery',
-        actor: ['Keanu Reeves', 'Sandra Bullock']
-    },
-    {
-        name: 'Lord of the Rings',
-        genre: 'fantasy',
-        actor: ['Elijah Wood', 'Orlando Bloom']
-    },
-    {
-        name: 'The HEAT',
-        genre: ['action', 'comedy'],
-        actor: ['Melissa McCarthy', 'Sandra Bullock']
-    },
-    {
-        name: 'SPY',
-        genre: ['action', 'comedy'],
-        actor: ['Melisa McCarthy', 'Jason Statham']
-    },
-    {
-        name: 'The Bourne Identity',
-        genre: ['action', 'mystery', 'thriller'],
-        actor: 'Matt Damon'
-    },
-    {
-        name: 'Les Miserables',
-        genre: ['musical', 'drama'],
-        actor: ['Hugn Jackman', 'Ann Hathaway']
-    },
-    {
-        name: 'The Devil Wears Prada',
-        genre: ['comedy', 'drama'],
-        actor: ['Ann Hathaway', 'Meryl Streep']
-    },
-    {
-        name: 'Harry Potter series',
-        genre: 'fantasy',
-        actor: ['Daniel Radclife', 'Emma Watson']
-    },
-    {
-        name: 'Mission: Impossible',
-        genre: 'action', 
-        actor: 'Tom Cruise'
-    },
-    {
-        name: 'Secondhand Lions',
-        genre: 'comedy',
-        actor: 'Harley Joel Osment'
-    } 
-];
-
-let users = [
-    {
-        name: "John Doe",
-        _email: "johndoe@123.com",
-        favorites:[]
-    }
-];
-
-let directors = [
-    {
-        name: "The Wachowskis",
-        birth: "",
-        death: "N/A",
-        bio: "",
-
-    }
-];
-
-let favorites = []
 
 //GET requests
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -99,8 +31,8 @@ app.get('/', (req, res) => {
     res.send('Welcome to myFlix!');
 });
 
-// Return a list of ALL movies to the User *worked
-app.get('/movies', (req, res) => {
+// Return a list of ALL movies to the User *worked added authetication on 2.9
+app.get('/movies', passport.authenticate('jwt', { session: false}), (req, res) => {
     Movies.find()
         .then((movies) => {
             res.status(201).json(movies);
