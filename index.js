@@ -170,9 +170,9 @@ app.put('/users/:Username', (req, res) => {
 });
 
 // Allow users to add a movie to their list of favorites(showing only a text that a movie has been added)
-app.post('/users/:Username/Movies/:MovieID', (req, res) => {
+app.post('/users/:Username/Movies/:_id', (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
-        $push: { FavoriteMovies: req.params.MovieID }
+        $push: { FavoriteMovies: req.params._id }
     },
     { new: true }, //This line makes sure that the updated document is returned
     (err, updatedUser) => {
@@ -186,9 +186,9 @@ app.post('/users/:Username/Movies/:MovieID', (req, res) => {
 });
 
 //Allow users to remove  movie from their list of favorites(showing only a text that a movie has been removed)
-app.delete('/users/:Username/Movies/:MovieID', (req, res) => {
+app.delete('/users/:Username/Movies/:_id', (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
-        $pull: { FavoriteMovies: req.params.MovieID }
+        $pull: { FavoriteMovies: req.params._id }
     },
     { new: true },
     (err, updatedUser) => {

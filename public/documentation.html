@@ -37,12 +37,15 @@
               <h5 style='color: skyblue'>{<br>
                 Title: "The Matrix",<br>
                 Description: "",<br>
-                Genre: { Name: "sci-fi",<br>
+                Genre: { <br>
+                         Name: "sci-fi",<br>
                          Description: "" }<br>
-                Director: { Name: "The Wachowskis", <br>
+                Director: {<br>
+                            Name: "The Wachowskis", <br>
                             Bio: "",<br>
                             Birth: "",<br>
-                            Death: ""}<br>
+                            Death: ""<br>
+                          } 
                 ImagePath: "https://en.wikipedia.org/wiki/The_Matrix#/media/File:The_Matrix_Poster.jpg", <br>
                 Featured: true<br>
               }<br>
@@ -50,26 +53,28 @@
           </tr>
           <tr>
             <td><h4>Return data about a genre(description) by name/title</h4></td>
-            <td><h4>/movies/:Genre</h4></td>
+            <td><h4>/movies/genre/[Title]</h4></td>
             <td><h4>GET</h4></td>
             <td><h4>None</h4></td>
-            <td><h4>Return genre data by name. Example:</h4></td><br>
-            <h5 style='color: skyblue'><br>
-              <!-- You need to put how Genre shows-->
-            </h5>
+            <td><h4>Return genre data by name. Example:</h4><br>
+            <h5 style='color: skyblue'>
+              {<br>
+                "Name": "Comedy",<br>
+                "Description": "Comedy is a genre of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggrating characteristics for humorous effect."<br>
+            }<br>
+            </h5></td>
           </tr>
           <tr>
             <td><h4>Return data about a director (bio, birth year, death year) by name</h4></td>
-            <td><h4>/directors/[Name]</h4></td>
+            <td><h4>/movie/director/[Name]</h4></td>
             <td><h4>GET</h4></td>
             <td><h4>None</h4></td>
             <td><h4>A JSON object holding data about a director. Example: </h4><br>
             <h5 style='color: skyblue'>{<br>
-              name: "The Wachowskis",<br>
-              birth: "",<br>
-              death: "",<br>
-              bio: ""<br>
-            } 
+              "Name": "Paul Feig",<br>
+              "Bio": "Paul Samuel Feig is an American actor and filmmaker. He is known for directing films starring frequent collaborator Melissa McCarthy.",<br>
+              "Birth": "1962"<br>
+          }<br>
             </h5></td>
           </tr>
           <tr>
@@ -78,13 +83,21 @@
             <td><h4>POST</h4></td>
             <td><h4>A JSON object holding data about user to add, structured like:</h4><br>
             <h5 style='color: skyblue'>{<br>
-              name: "movieholic55"<br>
-            }</h5></td>
-            <td><h4>A JSON object holding data about the student that was added, including an ID:</h4><br>
+              "Username": "John Doe",<br>
+              "Password": "johnjohndoe",<br>
+              "Email": "John@doe.com",<br>
+              "Birthday": "1985-05-23"<br>
+          }</h5></td>
+            <td><h4>A JSON object holding data about the user that was added, including an ID:</h4><br>
             <h5 style='color: skyblue'>{<br>
-              id: 5,<br>
-              name: "movieholic55"<br>
-            }</h5></td>
+              "FavoriteMovies": [],<br>
+              "_id": "600896e09cd2e21ea5388985",<br>
+              "Username": "John Doe",<br>
+              "Password": "johnjohndoe",<br>
+              "Email": "John@doe.com",<br>
+              "Birthday": "1985-05-23T00:00:00.000Z",<br>
+              "__v": 0<br>
+          }</h5></td>
           </tr>
           <tr>
             <td><h4>Allow users to update their user info(username)</h4></td>
@@ -95,14 +108,14 @@
           </tr>
           <tr>
             <td><h4>Allow users to add a movie to their list of favorites (showing only a text that a movie has been added)</h4></td>
-            <td><h4>/movies/[Name]</h4></td>
+            <td><h4>/movies/[Name]/Movies/[MovieID]</h4></td>
             <td><h4>PUT</h4></td>
             <td><h4>None</h4></td>
             <td><h4>A text message indicating whether the movie was successfully added to the favorite</h4></td>
           </tr>
           <tr>
             <td><h4>Allow to remove a movie from their list of favorites (showing only a text that a movie has been removed)</h4></td>
-            <td><h4>/users/[Name]/Favorites</h4></td>
+            <td><h4>/users/[Name]/Movies/[MovieID]</h4></td>
             <td><h4>DELETE</h4></td>
             <td><h4>None</h4></td>
             <td><h4>A text message indicating whether the movie was removed from the favorite</h4></td>
