@@ -32,6 +32,15 @@ let userSchema = mongoose.Schema({
     FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie'}]
 });
 
+userSchema.statics.hashPassword = (pasword) => {
+    return bcrypt.hashSync(password, 10);
+};
+
+//This in arrow func always represents object that defined in func (userSchema.methods) but I want this to be user so use function()
+userSchema.methods.validatePassword = function(password){
+    return bcrypt.compareSync(password, this.Password);
+};
+
 //Once you defined your schemas, you have to create models that uses schemas you defined,
 //It'll be stored in data/db file as db.movies, db.users etc. Title 'Movie' create db.movies, 'User' create db.users.
 let Movie = mongoose.model('Movie', movieSchema);
