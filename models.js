@@ -1,6 +1,7 @@
 // In order to use app, you always need to require the app
 let mongoose = require('mongoose');
 const { stringify } = require('uuid');
+const bcrypt = require('bcrypt');
 
 //schema=collection you made on mongoose and you need to define each scheme here:
 //required means that field has to follow this schema and it ensures that the key.
