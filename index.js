@@ -35,14 +35,14 @@ const { send } = require("process");
 const Movies = Models.Movie;
 const Users = Models.User;
 //Connect to the server you created
-mongoose.connect( process.env.CONNECTION_URI, {
+/*mongoose.connect( process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-});
-/*mongoose.connect("mongodb://localhost:27017/myFlixDB", {
+});*/
+mongoose.connect("mongodb://localhost:27017/myFlixDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}); */
+}); 
 
 //To erase error message of useFindAndModify
 mongoose.set("useFindAndModify", false);
@@ -183,7 +183,7 @@ app.post(
         } else {
           Users.create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday,
           })
@@ -217,7 +217,20 @@ app.post(
 app.put(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
+  [
+    check("Username", "Username is required").isLength({ min: 5 }),
+    check(
+      "Username",
+      "Username contains non alphanumeric characters - not allowed."
+    ).isAlphanumeric(),
+    check("Password", "Password is required").not().isEmpty(),
+    check("Email", "Email does not appear to be valid").isEmail(),
+  ],
   (req, res) => {
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
