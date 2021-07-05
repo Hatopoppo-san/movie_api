@@ -57,11 +57,17 @@ require("./passport");
 //GET requests
 app.use("/", express.static(path.join(__dirname, "public")));
 
+/**
+ * This returns main page of this backend.
+ */
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
 });
 
-// Return a list of ALL movies to the User *worked added authetication on 2.9
+/**
+ * Return all movies to user.
+ * This requires JWT token.
+ */
 app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
@@ -77,8 +83,11 @@ app.get(
   }
 );
 
-// Return data (description, genre, director, image URL, whether it's featured or not) about a single movie by title to the user
-// *worked
+/**
+ * Return data (description, genre, director, image URL, whether it's featured or not) about a single movie by title to the user.
+ * This requires JWT token.
+ */
+
 app.get(
   "/movies/:Title",
   passport.authenticate("jwt", { session: false }),
@@ -94,7 +103,10 @@ app.get(
   }
 );
 
-//Return data about a genre(description) by name/title
+/**
+ * Return data about a genre(description) by name/title.
+ * This requires JWT token.
+ */
 app.get(
   "/movies/genre/:title",
   passport.authenticate("jwt", { session: false }),
@@ -110,7 +122,10 @@ app.get(
   }
 );
 
-// Return data about a director (bio, birth year, death year) by name
+/**
+ * Return data about a director (bio, birth year, death year) by name.
+ * This requires JWT token.
+ */
 app.get(
   "/movies/director/:name",
   passport.authenticate("jwt", { session: false }),
@@ -126,7 +141,9 @@ app.get(
   }
 );
 
-//Get all users
+/**
+ * GET all users
+ */
 app.get("/users", (req, res) => {
   Users.find()
     .then((users) => {
@@ -138,7 +155,10 @@ app.get("/users", (req, res) => {
     });
 });
 
-//Get a user by specific name
+/**
+ * GET a user by specific name.
+ * This requires JWT token.
+ */
 app.get(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -154,7 +174,10 @@ app.get(
   }
 );
 
-// Allow new users to register
+/**
+ * Allow new user to register.
+ * User will be registered with hash password.
+ */
 app.post(
   "/users",
   [
@@ -203,7 +226,9 @@ app.post(
   }
 );
 
-// Allow users to update their user info by username
+/**
+ * Allow users to update their user info by username.
+ */
 /* We'll expect JSON in this format
 {
     Username: String,
@@ -254,7 +279,9 @@ app.put(
   }
 );
 
-// Allow users to add a movie to their list of favorites(showing only a text that a movie has been added)
+/**
+ * Allow users to add a movie to their list of favorites(showing only a text that a movie has been added)
+ */
 app.post(
   "/users/:Username/Movies/:_id",
   passport.authenticate("jwt", { session: false }),
@@ -277,7 +304,9 @@ app.post(
   }
 );
 
-//Allow users to remove  movie from their list of favorites(showing only a text that a movie has been removed)
+/**
+ * Allow users to remove  movie from their list of favorites(showing only a text that a movie has been removed)
+ */
 app.delete(
   "/users/:Username/Movies/:_id",
   passport.authenticate("jwt", { session: false }),
@@ -300,7 +329,9 @@ app.delete(
   }
 );
 
-//Delete a user by username
+/**
+ * DELETE a user by username.
+ */
 app.delete(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -320,7 +351,9 @@ app.delete(
   }
 );
 
-//Allow existing users to deregister (showing only a text that a user email has been removed)
+/**
+ * Allow existing users to deregister (showing only a text that a user email has been removed)
+ */
 app.delete(
   "/users/:name",
   passport.authenticate("jwt", { session: false }),
