@@ -1,6 +1,6 @@
 # movie_api
 
-REST-full API built with Node and Express, provides info on movies.
+REST-full API built with Node and Express, provides info of movies.
 
 This project is the second achievement that is part of the CareeFoundry curriculum.
 
